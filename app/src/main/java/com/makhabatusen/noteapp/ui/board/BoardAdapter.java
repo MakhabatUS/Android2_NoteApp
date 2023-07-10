@@ -3,6 +3,8 @@ package com.makhabatusen.noteapp.ui.board;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -13,19 +15,31 @@ import com.makhabatusen.noteapp.R;
 import java.util.ArrayList;
 
 public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> {
+    private BoardsButtonsListener boardListener;
+    private final ArrayList<String> titles = new ArrayList<>();
+    private final ArrayList<String> desc = new ArrayList<>();
+    private final ArrayList<Integer> photos = new ArrayList<>();
 
-private ArrayList<String > titles = new ArrayList<>();
 
     public BoardAdapter() {
-        titles.add("Fast");
-        titles.add("Free");
-        titles.add("Powerful");
+
+        titles.add("EXPLORE");
+        titles.add("DISCOVERY");
+        titles.add("CREATE");
+
+        desc.add("EXPLORE THE UNKNOWN WORLD");
+        desc.add("DISCOVER THE BEAUTY AROUND");
+        desc.add("CREATING WIRELESS POSSIBILITIES");
+
+        photos.add(R.drawable.explore);
+        photos.add(R.drawable.discovery);
+        photos.add(R.drawable.create);
+
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.pager_board, parent, false);
         return new ViewHolder(view);
@@ -33,28 +47,63 @@ private ArrayList<String > titles = new ArrayList<>();
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-
         holder.bind(position);
     }
 
     @Override
     public int getItemCount() {
-        return 3;
+        return titles.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
+        private TextView textTitle;
+        private TextView textDesc;
+        private ImageView imageView;
+        private Button btnLogin;
 
-        TextView tvTitle;
-        TextView tvDescription;
+
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            tvTitle = itemView.findViewById(R.id.tv_title);
-            tvDescription = itemView.findViewById(R.id.tv_description);
+            init(itemView);
+
+        }
+
+        private void init(View itemView) {
+
+            textTitle = itemView.findViewById(R.id.textTitle);
+            textDesc = itemView.findViewById(R.id.textDesc);
+            imageView = itemView.findViewById(R.id.imageView);
+            btnLogin = itemView.findViewById(R.id.btn_login);
+
+
+            btnLogin.setOnClickListener(v->{
+                boardListener.openMainPage();
+            });
+//
         }
 
         public void bind(int position) {
-            tvTitle.setText( titles.get(position));
+            textTitle.setText(titles.get(position));
+            imageView.setImageResource(photos.get(position));
+            textDesc.setText(desc.get(position));
+            btnLoginSetUP(position);
+
         }
+
+        private void btnLoginSetUP(int position) {
+            if (position == 2)
+                btnLogin.setVisibility(View.VISIBLE);
+            else
+                btnLogin.setVisibility(View.GONE);
+        }
+
+    }
+    public  interface BoardsButtonsListener {
+        void openMainPage();
+    }
+
+    public void setOnButtonListener( BoardsButtonsListener listener) {
+        boardListener = listener;
     }
 }

@@ -31,9 +31,29 @@
         android:name="com.makhabatusen.noteapp.ui.form.FormFragment"
         android:label="fragment_form"
         tools:layout="@layout/fragment_form" />
+
+    <fragment
+        android:id="@+id/navigation_profile"
+        android:name="com.makhabatusen.noteapp.ui.profile.ProfileFragment"
+        android:label="@string/title_profile"
+        tools:layout="@layout/fragment_profile" />
+
     <fragment
         android:id="@+id/boardFragment"
         android:name="com.makhabatusen.noteapp.ui.board.BoardFragment"
         android:label="fragment_board"
         tools:layout="@layout/fragment_board" />
+    <action
+        android:id="@+id/action_boardFragment_to_navigation_home"
+        app:destination="@id/navigation_home" />
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.makhabatusen.noteapp.ui.profile.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" />
+    <fragment
+        android:id="@+id/phoneFragment"
+        android:name="com.makhabatusen.noteapp.ui.auth.PhoneFragment"
+        android:label="fragment_phone"
+        tools:layout="@layout/fragment_phone" />
 </navigation>

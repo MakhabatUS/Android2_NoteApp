@@ -13,7 +13,7 @@
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       app:endIconMode="clear_text"
-    android:hint="@string/please_type_the_assignment">
+    android:hint="@string/please_type_your_note">
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/et"

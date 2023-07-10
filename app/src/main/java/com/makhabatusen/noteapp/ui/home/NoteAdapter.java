@@ -1,5 +1,6 @@
 package com.makhabatusen.noteapp.ui.home;
 
+import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,12 +16,12 @@ import com.makhabatusen.noteapp.Note;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
+public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
 
-    private ArrayList<Note> list = new ArrayList<>();
+    private final ArrayList<Note> notes = new ArrayList<>();
     private OnItemClickListener listener;
 
-    public TaskAdapter() {
+    public NoteAdapter() {
     }
 
 
@@ -32,22 +33,22 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.bind(list.get(position));
+        holder.bind(notes.get(position));
 
     }
 
     @Override
     public int getItemCount() {
-        // if we put 2, but it's only 1 item in the list, it will through an error (Array out of bound exception)
-        return list.size();
+        return notes.size();
     }
 
     public void setListener(OnItemClickListener listener) {
         this.listener = listener;
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     public void addList(List<Note> list) {
-        this.list.addAll(list);
+        this.notes.addAll(list);
         notifyDataSetChanged();
     }
 
@@ -59,43 +60,41 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
          */
 
         // adding item to top of the list
-        list.add(0, note);
+        notes.add(0, note);
         notifyItemInserted(0);
     }
 
 
     public void editItem(Note note, int pos) {
-        list.set(pos, note);
+        notes.set(pos, note);
         notifyItemChanged(pos);
     }
 
     public void deleteItem(int position) {
-        list.remove(position);
+        notes.remove(position);
         notifyItemRemoved(position);
     }
 
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView tvTask;
-        private TextView tvDate;
+        private final TextView tvTask;
+        private final TextView tvDate;
 
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            // new Interface OnItemClickListener
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    listener.onClick(getAdapterPosition(), list.get(getAdapterPosition()), getItemId());
+                    listener.onClick(getAdapterPosition(), notes.get(getAdapterPosition()), getItemId());
                 }
             });
 
-            // setting LongClickListener
             itemView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View view) {
-                    listener.onLongClick(getAdapterPosition(), list.get(getAdapterPosition()));
+                    listener.onLongClick(getAdapterPosition(), notes.get(getAdapterPosition()));
                     return true;
                 }
             });
@@ -108,10 +107,8 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
 
         public void bind(Note note) {
             tvTask.setText(note.getTitle());
-            // tvDate.setText(String.valueOf(note.getCreatedAt()));
             tvDate.setText(note.getCreatedAt());
 
-            //setting Background Color for Items (orange if position is even, blue if odd)
             if (getAdapterPosition() % 2 == 0) {
                 itemView.setBackgroundResource(R.color.orange_light);
             } else {
