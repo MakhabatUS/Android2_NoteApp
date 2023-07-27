@@ -1,33 +1,36 @@
 package com.makhabatusen.noteapp;
 
+import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 import java.io.Serializable;
 
 
+
 @Entity
 public class Note implements Serializable {
 
-
-    @PrimaryKey(autoGenerate = true)
-    private int id;
+    @PrimaryKey (autoGenerate = true)
+    private long id;
     private String title;
     private String createdAt;
 
     public Note() {
     }
 
-    public Note(String title, String  createdAt) {
+    public Note(String title, String createdAt) {
         this.title = title;
         this.createdAt = createdAt;
     }
 
-    public int getId() {
+
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+
+    public void setId(long id) {
         this.id = id;
     }
 
